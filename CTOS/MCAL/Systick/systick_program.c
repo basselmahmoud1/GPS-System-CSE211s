@@ -23,7 +23,7 @@ u8 Systick_u8Init (u8 Enable , u32 NoOfTicks )
 #elif (Systick_CLK_SOURCE==PIOSC_CLK_SRC)
         control_reg->CLK_SRC = 0 ;
 #else
-        return ERR_state;
+        return ERR_state;   // Error occurs 
 #endif
         control_reg->ENABLE = SYSTICK_ENABLE ; 
     }
