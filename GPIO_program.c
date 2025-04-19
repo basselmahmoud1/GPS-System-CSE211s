@@ -5,50 +5,50 @@
 /****************************************************************/
 #include "GPIO_Private.h"
 #include "GPIO_interface.h"
-u8 GPIO_u8Init(PORT Portid){
+u8 GPIO_u8Init(u8 Portid){
+    u8 ERR_state = ERR;
 	volatile REG_PORT* port;
-	u8 ERR_STATE=ERR;
 	switch (Portid)
     {
-        case PortA:
-						GPIO_RCGCGPIO->PortA = GPIO_CLK_ENABLE;
-				    while (!(GPIO_PRGPIO->PortA));
+        case PortA:  
+        GPIO_RCGCGPIO->PortA_REG=GPIO_CLK_ENABLE;
+        while (!(GPIO_PRGPIO->PortA_REG));
 						port=GPIO_PORTA; break;
-        case PortB:
-						GPIO_RCGCGPIO->PortB = GPIO_CLK_ENABLE;
-						while (!(GPIO_PRGPIO->PortB));
+        case PortB: 
+        GPIO_RCGCGPIO->PortB_REG=GPIO_CLK_ENABLE;
+        while (!(GPIO_PRGPIO->PortB_REG));
 						port=GPIO_PORTB; break;
-        case PortC:
-						GPIO_RCGCGPIO->PortC = GPIO_CLK_ENABLE;
-						while (!(GPIO_PRGPIO->PortC));
+        case PortC: 
+        GPIO_RCGCGPIO->PortC_REG=GPIO_CLK_ENABLE;
+        while (!(GPIO_PRGPIO->PortC_REG));
 						port=GPIO_PORTC; break;
-        case PortD:
-						GPIO_RCGCGPIO->PortD = GPIO_CLK_ENABLE;
-						while (!(GPIO_PRGPIO->PortD));
+        case PortD: 
+        GPIO_RCGCGPIO->PortD_REG=GPIO_CLK_ENABLE;
+        while (!(GPIO_PRGPIO->PortD_REG));
 						port=GPIO_PORTD; break;
-        case PortE:
-						GPIO_RCGCGPIO->PortE = GPIO_CLK_ENABLE;
-						while (!(GPIO_PRGPIO->PortE));
+        case PortE: 
+        GPIO_RCGCGPIO->PortE_REG=GPIO_CLK_ENABLE;
+        while (!(GPIO_PRGPIO->PortE_REG));
 						port=GPIO_PORTE; break;
-        case PortF:
-						GPIO_RCGCGPIO->PortF = GPIO_CLK_ENABLE;
-						while (!(GPIO_PRGPIO->PortF));
+        case PortF: 
+        GPIO_RCGCGPIO->PortF_REG=GPIO_CLK_ENABLE;
+        while (!(GPIO_PRGPIO->PortF_REG));
 						port=GPIO_PORTF; break;
-        default: ERR_STATE=ERR; return ERR_STATE;
-    } //unlock
+        default: return ERR_state; // Invalid port
+    } //unlock  
 				port->GPIOLOCK=GPIO_LOCK_KEY;
 				port->GPIOCR=GPIO_PORT_ENABLE;
 				port->GPIOAFSEL=GPIO_PORT_DISABLE;
 				port->GPIOPCTL=GPIO_PORT_DISABLE;
 				port->GPIOAMSEL=GPIO_PORT_DISABLE;
 				port->GPIODEN=GPIO_PORT_ENABLE;
-
-		ERR_STATE=NOERR;
-		return ERR_STATE;
+	
+                ERR_state = NOERR;
+                return ERR_state;
 	}
-u8 GPIO_u8ConfigPORT(PORT PortId ,u8 PortDir , u8 PortValue , u8 InputState){
+u8 GPIO_u8ConfigPORT(u8 PortId ,u8 PortDir , u8 PortValue , u8 InputState){
+    u8 ERR_state = ERR;
 	volatile REG_PORT* port;
-	u8 ERR_STATE=ERR;
 		switch (PortId)
     {
         case PortA: port=GPIO_PORTA; break;
@@ -57,7 +57,7 @@ u8 GPIO_u8ConfigPORT(PORT PortId ,u8 PortDir , u8 PortValue , u8 InputState){
         case PortD: port=GPIO_PORTD; break;
         case PortE: port=GPIO_PORTE; break;
         case PortF: port=GPIO_PORTF; break;
-        default: ERR_STATE=ERR; return ERR_STATE;
+        default: return ERR_state; // Invalid port
     }
 		if(PortDir==GPIO_INPUT){ //if the portdir=0
 				port->GPIODIR=GPIO_PORT_INPUT; //put 0
@@ -66,21 +66,20 @@ u8 GPIO_u8ConfigPORT(PORT PortId ,u8 PortDir , u8 PortValue , u8 InputState){
 			else if(InputState==GPIO_PD)
 				port->GPIOPDR=GPIO_PORT_ENABLE;
 }
-
+		
 		else if(PortDir==GPIO_OUTPUT)// if the portdir=1
 		port->GPIODIR=GPIO_PORT_OUTPUT; //put 1
 		if(PortValue==GPIO_OUT_HIGH)
 			port->GPIO_WRITE=GPIO_PORT_OUT_HIGH;
 		else if(PortValue==GPIO_OUT_LOW)
 			port->GPIO_WRITE=GPIO_PORT_OUT_LOW;
-		ERR_STATE=NOERR;
-		return ERR_STATE;
-
+            ERR_state = NOERR;
+            return ERR_state;
+		
 	}
-u8 GPIO_u8SetPinValue(PORT PortId ,PIN PinId,u8 PinValue)
-{		volatile REG_PORT* port;
-        u8 ERR_STATE=ERR;
-
+u8 GPIO_u8SetPinValue(u8 PortId ,u8 PinId,u8 PinValue)
+{	u8 ERR_state = ERR;	
+    volatile REG_PORT* port;
 		switch (PortId)
     {
         case PortA: port=GPIO_PORTA; break;
@@ -89,21 +88,19 @@ u8 GPIO_u8SetPinValue(PORT PortId ,PIN PinId,u8 PinValue)
         case PortD: port=GPIO_PORTD; break;
         case PortE: port=GPIO_PORTE; break;
         case PortF: port=GPIO_PORTF; break;
-        default: ERR_STATE=ERR; return ERR_STATE;
+        default: return ERR_state; // Invalid port
     }
 		if (PinValue==GPIO_OUT_HIGH)
         SET_BIT(port->GPIO_WRITE,PinId);
-
-    else if (PinValue == GPIO_OUT_LOW)
+    
+    else if (PinValue == GPIO_OUT_LOW)   
         CLR_BIT(port->GPIO_WRITE,PinId);
-		ERR_STATE=NOERR;
-		return ERR_STATE;
+        ERR_state = NOERR;
+        return ERR_state;
 }
-u8 GPIO_u8SetPortValue(PORT PortId,u8 PortValue)
-{
+u8 GPIO_u8SetPortValue(u8 PortId,u8 PortValue)
+{   u8 ERR_state = ERR;
     volatile REG_PORT* port;
-    u8 ERR_STATE=ERR;
-
     switch (PortId)
     {
         case PortA: port=GPIO_PORTA; break;
@@ -112,28 +109,48 @@ u8 GPIO_u8SetPortValue(PORT PortId,u8 PortValue)
         case PortD: port=GPIO_PORTD; break;
         case PortE: port=GPIO_PORTE; break;
         case PortF: port=GPIO_PORTF; break;
-        default: ERR_STATE=ERR; return ERR_STATE;
+        default: return ERR_state; // Invalid port
     }
     port->GPIO_WRITE=PortValue&GPIO_PORT_ENABLE;
-				return 0;
+    ERR_state = NOERR;
+    return ERR_state;
 }
-u8 GPIO_u8SetMode(PORT PortId,PIN PinId)
-{    volatile REG_PORT* port;
-        u8 ERR_STATE=ERR;
-
+u8 GPIO_u8SetMode(u8 PortId,u8 PinId,u8 Mode)
+{   u8 ERR_state = ERR; 
+    volatile REG_PORT* port;
     switch (PortId)
     {
-        case PortA: port=GPIO_PORTA; break;
-        case PortB: port=GPIO_PORTB; break;
-        case PortC: port=GPIO_PORTC; break;
-        case PortD: port=GPIO_PORTD; break;
-        case PortE: port=GPIO_PORTE; break;
-        case PortF: port=GPIO_PORTF; break;
-        default: ERR_STATE=ERR; return ERR_STATE;
-    }
+        case PortA:  
+        GPIO_RCGCGPIO->PortA_REG=GPIO_CLK_ENABLE;
+        while (!(GPIO_PRGPIO->PortA_REG));
+						port=GPIO_PORTA; break;
+        case PortB: 
+        GPIO_RCGCGPIO->PortB_REG=GPIO_CLK_ENABLE;
+        while (!(GPIO_PRGPIO->PortB_REG));
+						port=GPIO_PORTB; break;
+        case PortC: 
+        GPIO_RCGCGPIO->PortC_REG=GPIO_CLK_ENABLE;
+        while (!(GPIO_PRGPIO->PortC_REG));
+						port=GPIO_PORTC; break;
+        case PortD: 
+        GPIO_RCGCGPIO->PortD_REG=GPIO_CLK_ENABLE;
+        while (!(GPIO_PRGPIO->PortD_REG));
+						port=GPIO_PORTD; break;
+        case PortE: 
+        GPIO_RCGCGPIO->PortE_REG=GPIO_CLK_ENABLE;
+        while (!(GPIO_PRGPIO->PortE_REG));
+						port=GPIO_PORTE; break;
+        case PortF: 
+        GPIO_RCGCGPIO->PortF_REG=GPIO_CLK_ENABLE;
+        while (!(GPIO_PRGPIO->PortF_REG));
+						port=GPIO_PORTF; break;
+        default: return ERR_state; // Invalid port
+    } 
     SET_BIT(port->GPIOAFSEL,PinId);
-		ERR_STATE=NOERR;
-		return ERR_STATE;
+    GPIO_SET_MODE(port, PinId, Mode); // set the pctl register
+
+	ERR_state = NOERR;
+    return ERR_state;
 }
 
 
