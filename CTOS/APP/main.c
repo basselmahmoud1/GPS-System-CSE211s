@@ -76,17 +76,14 @@ int main(void){
 					GPIO_u8SetPinValue(PortF,Pin1,GPIO_OUT_LOW);}
 
 			value=GPIO_u8GetPinValue(PortD,Pin5,&PinValue);
-			if(value==NOERR&&PinValue==1)
+			if(value==NOERR&&PinValue==1){
 				  GPIO_u8SetPinValue(PortF,Pin2,GPIO_OUT_LOW); //light green if PortD pin5 is high
 					Delay(1000);
 					GPIO_u8SetPinValue(PortF,Pin2,GPIO_OUT_LOW);}
-
-
-
-
-
+				}
 
 
 }
+
 
 
