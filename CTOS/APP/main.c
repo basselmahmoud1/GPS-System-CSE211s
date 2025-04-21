@@ -80,6 +80,8 @@ int main(void){
 				  GPIO_u8SetPinValue(PortF,Pin2,GPIO_OUT_LOW); //light green if PortD pin5 is high
 					Delay(1000);
 					GPIO_u8SetPinValue(PortF,Pin2,GPIO_OUT_LOW);}
+
+					GPIO_u8SetPortValue(PortB,0x0);   			//testing setportvalue function
 				}
 
 
