@@ -35,12 +35,12 @@ void Delay(u32 millisec)
     while(1)
     {
 				GPIO_u8SetPortValue(PortD,0x0);
-				Delay(1000000);
+				Delay(1000);
 
 				for(;m<3;m++)
 				{
 				GPIO_u8SetPinValue(PortB,Pin2,GPIO_OUT_HIGH);
-				Delay(10000000);
+				Delay(1000);
 				GPIO_u8SetPinValue(PortB,Pin2,GPIO_OUT_HIGH);	}
 
         pb_1=GPIO_u8GetPinValue(PortA,Pin2,&PinValue_pb1);
@@ -48,14 +48,14 @@ void Delay(u32 millisec)
 
         if (pb_1==NOERR&&PinValue_pb1==1){ //if pb is pressed , light red
             GPIO_u8SetPinValue(PortB,Pin0,GPIO_OUT_HIGH);
-						Delay(1000000);
+						Delay(1000);
 						GPIO_u8SetPinValue(PortB,Pin0,GPIO_OUT_LOW);
-						Delay(1000000);}
+						Delay(1000);}
         if (pb_2==NOERR&&PinValue_pb2==1){ //if pb isn't pressed , light red
             GPIO_u8SetPinValue(PortB,Pin1,GPIO_OUT_HIGH);
-						Delay(1000000);
+						Delay(1000);
 						GPIO_u8SetPinValue(PortB,Pin1,GPIO_OUT_LOW);
-						Delay(1000000);}
+						Delay(1000);}
 				}
 
 
