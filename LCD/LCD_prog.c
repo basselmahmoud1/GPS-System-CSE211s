@@ -10,6 +10,7 @@
 #include "LCD_config.h"
 #include "LCD_priv.h"
 #include "LCD_int.h"
+#include "systick_interface.h"
 
 #define HIGH    1
 #define LOW     0
@@ -17,19 +18,21 @@
 static void LCD_voidSendEnablePulse(){
     // send enable pulse
     GPIO_u8SetPinValue (LCD_CONTROL_PORT , LCD_E_PIN ,HIGH);
-    Delay(10);
+    Systick_voidDelay_ms(10);
     GPIO_u8SetPinValue (LCD_CONTROL_PORT , LCD_E_PIN ,LOW);
 }
 
 void LCD_voidInit(void){
-    Delay(40);
+    Systick_voidDelay_ms(40);
     // send instruction 0011 1000
     LCD_voidSendCommand(LCD_FUN_SET_TWOLINE_5x7);
+		Systick_voidDelay_us(40);
     // DISPLAY AND CURSOR
     LCD_voidSendCommand(LCD_DIS_ON_SETUP);
+		Systick_voidDelay_us(40);
     //SEND CLEAR
     LCD_voidSendCommand(LCD_CLR);
-    Delay(2);
+    Systick_voidDelay_ms(2);
     //shift and increment mode
     LCD_voidSendCommand(LCD_SHIFT_INC);
 }
@@ -82,15 +85,5 @@ void LCD_voidMoveCursor(u8 row,u8 col){
 
 void LCD_voidClearScreen(void){
     LCD_voidSendCommand(LCD_CLR);
-}
-
-void Delay (u32 millisec)
-{
-    volatile int i = 0;
-		int j = 0;
-	for (; j < millisec ; j++)
-    {
-        for(i = 0; i< 10000 ; i++);
-    }
 }
 
