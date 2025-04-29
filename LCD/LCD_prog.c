@@ -18,11 +18,13 @@
 static void LCD_voidSendEnablePulse(){
     // send enable pulse
     GPIO_u8SetPinValue (LCD_CONTROL_PORT , LCD_E_PIN ,HIGH);
-    Systick_voidDelay_ms(10);
+    Systick_voidDelay_ms(2);///
     GPIO_u8SetPinValue (LCD_CONTROL_PORT , LCD_E_PIN ,LOW);
 }
 
 void LCD_voidInit(void){
+		GPIO_u8ConfigPORT (LCD_CONTROL_PORT ,GPIO_PORT_OUTPUT ,0 ,0);
+		GPIO_u8ConfigPORT (LCD_DATA_PORT ,GPIO_PORT_OUTPUT ,0 ,0);
     Systick_voidDelay_ms(40);
     // send instruction 0011 1000
     LCD_voidSendCommand(LCD_FUN_SET_TWOLINE_5x7);
@@ -35,6 +37,7 @@ void LCD_voidInit(void){
     Systick_voidDelay_ms(2);
     //shift and increment mode
     LCD_voidSendCommand(LCD_SHIFT_INC);
+		Systick_voidDelay_ms(2);
 }
 
 void LCD_voidSendCommand(u8 command){
@@ -47,14 +50,15 @@ void LCD_voidSendCommand(u8 command){
     LCD_voidSendEnablePulse();
 }
 
-void LCD_voidSendData(u8 data){
+static void LCD_voidSendData(u8 data){
     //print characters
+	   //SET DATA PORT TO DATA VALUES
+    GPIO_u8SetPortValue(LCD_DATA_PORT,data);
     // RS -> 1
     GPIO_u8SetPinValue(LCD_CONTROL_PORT,LCD_RS_PIN,HIGH);
     //RW ->0
     GPIO_u8SetPinValue(LCD_CONTROL_PORT,LCD_RW_PIN,LOW);
-    //SET DATA PORT TO DATA VALUES
-    GPIO_u8SetPortValue(LCD_DATA_PORT,data);
+
     LCD_voidSendEnablePulse();
 }
 

@@ -2,7 +2,6 @@
 #include "STD_TYPES.h"
 #include "BIT_MATH.h"
 #include "systick_interface.h"
-
 int main(){
 	LCD_voidInit();
 while (1){
