@@ -37,6 +37,9 @@
 #define UART0_RX_PIN  0  // PA0
 #define UART0_TX_PIN  1  // PA1
 
+#define UART1_RX_PIN  0  // PB0
+#define UART1_TX_PIN  1  // PB1
+
 #define UART_EN_PinID 0
 
 #define Clear_LineCtrlConfig 0xFFFFFF00
