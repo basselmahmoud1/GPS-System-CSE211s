@@ -8,7 +8,7 @@
 #define LCD_CONFIG_H_
 
 #define LCD_CONTROL_PORT    PortA
-#define LCD_DATA_PORT       PortC
+#define LCD_DATA_PORT       PortD
 
 #define LCD_RS_PIN      Pin0
 #define LCD_RW_PIN      Pin1
@@ -25,3 +25,4 @@
 
 
 #endif
+
