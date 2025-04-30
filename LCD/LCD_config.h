@@ -14,10 +14,6 @@
 #define LCD_RW_PIN      Pin6
 #define LCD_E_PIN       Pin7
 
-#define LCD_D0_PIN   Pin0
-#define LCD_D1_PIN   Pin1
-#define LCD_D2_PIN   Pin2
-#define LCD_D3_PIN   Pin3
 #define LCD_D4_PIN   Pin4
 #define LCD_D5_PIN   Pin5
 #define LCD_D6_PIN   Pin6
