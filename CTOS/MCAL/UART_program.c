@@ -18,7 +18,7 @@
 void UART0_voidConfig()
 {
 	//config CLK
-	f64 UART_CLK = 16000000.0 / (16 * BaudRate);
+	f64 UART_CLK = 48000000.0 / (16 * BaudRate);
 	UART0_IBRD_R= (u32)UART_CLK;                                   //integer part
 	UART0_FBRD_R= (u32)((UART_CLK - (u32)UART_CLK) * 64 + 0.5);    //fraction part
 	
@@ -32,7 +32,7 @@ void UART0_voidInitialize()
 	volatile REG_PORT* port = GPIO_PORTA;
 	
 	SetBit(SYSCTL_RCGCUART_R,UART_0);
-	while (!GetBit(SYSCTL_PRUART_R, UART_0));  // Wait for UART0 to be ready
+	//while (!GetBit(SYSCTL_PRUART_R, UART_0));  // Wait for UART0 to be ready
 	GPIO_u8Init(PortA);
 
 	// Configure UART0 pins
@@ -71,10 +71,13 @@ void UART0_voidSendByte(u8 Data_To_Be_Sent)
 
 void UART0_voidReceiveString(u8 *String)
 {
-	u8 x=0;
-	while(!GetBit(UART0_FR_R,RXFE))
+	u8 x = 0;
+	u8 y=1;
+	while (1)
 	{
-		String[x++]=UART0_u8ReceiveByte();
+		y = UART0_u8ReceiveByte();
+		if ( y == '\n' || y == '\r' ) break;
+		String[x++] = y;
 	}
 	String[x] = '\0';
 }
@@ -88,11 +91,13 @@ void UART0_voidSendString(u8 *String)
 }
 
 /////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////
 
 void UART1_voidConfig()
 {
 	//config CLK
-	f64 UART_CLK = 16000000.0 / (16 * BaudRate);
+	f64 UART_CLK = 48000000.0 / (16 * BaudRate);
 	UART1_IBRD_R= (u32)UART_CLK;                                   //integer part
 	UART1_FBRD_R= (u32)((UART_CLK - (u32)UART_CLK) * 64 + 0.5);    //fraction part
 	
@@ -106,7 +111,7 @@ void UART1_voidInitialize()
 	volatile REG_PORT* port = GPIO_PORTB;
 	
 	SetBit(SYSCTL_RCGCUART_R,UART_1);
-	while (!GetBit(SYSCTL_PRUART_R, UART_1));  // Wait for UART1 to be ready
+	//while (!GetBit(SYSCTL_PRUART_R, UART_1));  // Wait for UART1 to be ready
 	GPIO_u8Init(PortB);
 
 	// Configure UART0 pins
@@ -144,10 +149,13 @@ void UART1_voidSendByte(u8 Data_To_Be_Sent)
 
 void UART1_voidReceiveString(u8 *String)
 {
-	u8 x=0;
-	while(!GetBit(UART1_FR_R,RXFE))
+	u8 x = 0;
+	u8 y=1;
+	while (1)
 	{
-		String[x++]=UART1_u8ReceiveByte();
+		y = UART1_u8ReceiveByte();
+		if ( y == '\n' || y == '\r' ) break;
+		String[x++] = y;
 	}
 	String[x] = '\0';
 }
