@@ -7,7 +7,8 @@
 #ifndef LCD_PRIV_H_
 #define LCD_PRIV_H_
 
-static void SendEnablePulse(void);
+static void Enable_set(void);
+static void Enable_clr(void);
 static void WriteHalfPort(u8 value);
 
 #define LCD_CLR                  0x01
