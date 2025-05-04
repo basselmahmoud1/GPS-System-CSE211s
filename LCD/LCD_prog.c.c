@@ -17,6 +17,8 @@
 
 void LCD_voidInit(void){
     // control pins config
+    GPIO_u8ConfigPORT(LCD_CONTROL_PORT,GPIO_OUTPUT,LOW,0);
+    GPIO_u8ConfigPORT(LCD_DATA_PORT,GPIO_OUTPUT,LOW,0);
     GPIO_u8ConfigPin(LCD_CONTROL_PORT,LCD_RS_PIN,GPIO_OUTPUT,LOW,0);
     GPIO_u8ConfigPin(LCD_CONTROL_PORT,LCD_RW_PIN,GPIO_OUTPUT,LOW,0);
     GPIO_u8ConfigPin(LCD_CONTROL_PORT,LCD_E_PIN,GPIO_OUTPUT,LOW,0);
@@ -25,25 +27,27 @@ void LCD_voidInit(void){
     GPIO_u8ConfigPin(LCD_DATA_PORT,LCD_D5_PIN,GPIO_OUTPUT,LOW,0);
     GPIO_u8ConfigPin(LCD_DATA_PORT,LCD_D6_PIN,GPIO_OUTPUT,LOW,0);
     GPIO_u8ConfigPin(LCD_DATA_PORT,LCD_D7_PIN,GPIO_OUTPUT,LOW,0);
+
+    Systick_u8Init(SYSTICK_ENABLE,MAX_SYSTICK_TICKS);
     //delay more than 30 ms
     Systick_voidDelay_ms(40);
-    //RS = 0
-    GPIO_u8SetPinValue(LCD_CONTROL_PORT,LCD_RS_PIN,LOW);
-    //RW = 0
-    GPIO_u8SetPinValue(LCD_CONTROL_PORT,LCD_RW_PIN,LOW);
-    WriteHalfPort(2);
-    SendEnablePulse();
+    LCD_voidSendCommand(0x33);
+    //LCD_voidSendCommand(0x02);
+    //SendEnablePulse();
     // set LCD 2 line 16 char 5x7
+    LCD_voidSendCommand(0x32);
+    Systick_voidDelay_us(45);
     LCD_voidSendCommand(0x28);
     Systick_voidDelay_us(45);
+    LCD_voidSendCommand(LCD_CLR);
     //display, cusror , blink set on
-    LCD_voidSendCommand(LCD_DIS_ON_SETUP);
+    //LCD_voidSendCommand(LCD_DIS_ON_SETUP);
     Systick_voidDelay_us(45);
     //clear display
-    LCD_voidSendCommand(LCD_CLR);
+    LCD_voidSendCommand(0x0C);
     Systick_voidDelay_ms(2);
     //ENtry Moder
-    LCD_voidSendCommand(LCD_SHIFT_INC);
+    //LCD_voidSendCommand(LCD_SHIFT_INC);
     // send message for checking
     LCD_voidSendString("Intialized");
 }
@@ -55,11 +59,13 @@ void LCD_voidSendCommand(u8 command){
     GPIO_u8SetPinValue(LCD_CONTROL_PORT,LCD_RW_PIN,LOW);
     //command send
     //most sig bits
+    Enable_set();
     WriteHalfPort(command>>4);
-    SendEnablePulse();
+    Enable_clr();
     // least sign bits
+    Enable_set();
     WriteHalfPort(command);
-    SendEnablePulse();
+    Enable_clr();
 }
 
 void LCD_voidSendData(u8 data){
@@ -69,11 +75,13 @@ void LCD_voidSendData(u8 data){
     GPIO_u8SetPinValue(LCD_CONTROL_PORT,LCD_RW_PIN,LOW);
     //data send
     //most sig bits
+	Enable_set();
     WriteHalfPort(data>>4);
-    SendEnablePulse();
+	Enable_clr();
     // least sign bits
+	Enable_set();
     WriteHalfPort(data);
-    SendEnablePulse();
+	Enable_clr();
 
 }
 
@@ -108,12 +116,15 @@ void LCD_voidClearScreen(void){
 
 /*************Helping Functions****************/
 
-static void SendEnablePulse(){
+static void Enable_set(){
     // send enable pulse
     GPIO_u8SetPinValue (LCD_CONTROL_PORT , LCD_E_PIN ,HIGH);
-    Systick_voidDelay_ms(2);///
+}
+static void Enable_clr(){
+    // send enable pulse
     GPIO_u8SetPinValue (LCD_CONTROL_PORT , LCD_E_PIN ,LOW);
 }
+
 
 static void WriteHalfPort(u8 value){
     GPIO_u8SetPinValue(LCD_DATA_PORT,LCD_D4_PIN,GetBit(value,0));
