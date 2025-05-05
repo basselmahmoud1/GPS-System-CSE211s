@@ -31,23 +31,18 @@ void LCD_voidInit(void){
     Systick_u8Init(SYSTICK_ENABLE,MAX_SYSTICK_TICKS);
     //delay more than 30 ms
     Systick_voidDelay_ms(40);
-    LCD_voidSendCommand(0x33);
-    //LCD_voidSendCommand(0x02);
-    //SendEnablePulse();
-    // set LCD 2 line 16 char 5x7
-    LCD_voidSendCommand(0x32);
+    LCD_voidSendCommand(Stabilize_4_Bit_CMD);
+    // set LCD 
+    LCD_voidSendCommand(Four_Bits_Data_Mode);
     Systick_voidDelay_us(45);
-    LCD_voidSendCommand(0x28);
-    Systick_voidDelay_us(45);
-    LCD_voidSendCommand(LCD_CLR);
-    //display, cusror , blink set on
-    //LCD_voidSendCommand(LCD_DIS_ON_SETUP);
+    LCD_voidSendCommand(Two_Line_Four_Bit_Mode);
     Systick_voidDelay_us(45);
     //clear display
+    LCD_voidSendCommand(LCD_CLR);
+    Systick_voidDelay_us(45);
     LCD_voidSendCommand(0x0C);
     Systick_voidDelay_ms(2);
-    //ENtry Moder
-    //LCD_voidSendCommand(LCD_SHIFT_INC);
+    
     // send message for checking
     LCD_voidSendString("Intialized");
 }
