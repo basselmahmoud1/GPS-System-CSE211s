@@ -12,7 +12,7 @@
 typedef struct {
     u32 GPIODATA;       // can be used for reading
     u32 unused0[254] ;
-    u32 GPIO_WRITE;     // this is the address which write on the all port
+    u32 GPIO_RW;     // this is the address which write on the all port
     u32 GPIODIR;        // handle the direction of the port
     u32 unused1[7] ;
     u32 GPIOAFSEL;

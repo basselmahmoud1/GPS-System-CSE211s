@@ -100,9 +100,9 @@ u8 GPIO_u8ConfigPin(u8 PortId, u8 PinId, u8 PinDir, u8 PinValue, u8 InputState)
     {
         SetBit(port->GPIODIR, PinId); // Set pin as output
         if (PinValue == GPIO_OUT_HIGH)
-        SetBit(port->GPIO_WRITE, PinId);
+        SetBit(port->GPIO_RW, PinId);
         else if (PinValue == GPIO_OUT_LOW)
-        ClrBit(port->GPIO_WRITE, PinId);
+        ClrBit(port->GPIO_RW, PinId);
     }
     else if (PinDir == GPIO_INPUT)
     {
@@ -141,7 +141,7 @@ u8 GPIO_u8ConfigPORT(u8 PortId ,u8 PortDir , u8 PortValue , u8 InputState){
 
 		else if(PortDir==GPIO_OUTPUT)// if the portdir=1
 		port->GPIODIR=GPIO_PORT_OUTPUT; //put 1
-        port->GPIO_WRITE=PortValue&GPIO_PORT_ENABLE;
+        port->GPIO_RW=PortValue&GPIO_PORT_ENABLE;
             ERR_state = NOERR;
             return ERR_state;
 
@@ -201,10 +201,10 @@ u8 GPIO_u8SetPinValue(u8 PortId ,u8 PinId,u8 PinValue)
         default: return ERR_state; // Invalid port
     }
 		if (PinValue==GPIO_OUT_HIGH)
-        SetBit(port->GPIO_WRITE,PinId);
+        SetBit(port->GPIO_RW,PinId);
 
     else if (PinValue == GPIO_OUT_LOW)
-    ClrBit(port->GPIO_WRITE,PinId);
+    ClrBit(port->GPIO_RW,PinId);
         ERR_state = NOERR;
         return ERR_state;
 }
@@ -223,7 +223,7 @@ u8 GPIO_u8SetPortValue(u8 PortId,u8 PortValue)
         case PortF: port=GPIO_PORTF; break;
         default: return ERR_state; // Invalid port
     }
-    port->GPIO_WRITE=PortValue&GPIO_PORT_ENABLE;
+    port->GPIO_RW=PortValue&GPIO_PORT_ENABLE;
     ERR_state = NOERR;
     return ERR_state;
 }
