@@ -16,7 +16,7 @@
 #define EastPin Pin6
 #define WestPin Pin7
 #define NumberOfPlaces_First6 6
-#define NumberOfPlaces_Rest
+#define NumberOfPlaces_Rest   4
 
 //function
-void Bonus_void_CheckDirection();
+void Bonus_void_CheckDirection(Landmark landmark);
