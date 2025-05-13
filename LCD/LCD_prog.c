@@ -10,15 +10,15 @@
 #include "LCD_int.h"
 #include "LCD_priv.h"
 #include "systick_interface.h"
+#include "GPIO_Private.h"
 
 #define HIGH    1
 #define LOW     0
 
 
+
 void LCD_voidInit(void){
     // control pins config
-    GPIO_u8ConfigPORT(LCD_CONTROL_PORT,GPIO_OUTPUT,LOW,0);
-    GPIO_u8ConfigPORT(LCD_DATA_PORT,GPIO_OUTPUT,LOW,0);
     GPIO_u8ConfigPin(LCD_CONTROL_PORT,LCD_RS_PIN,GPIO_OUTPUT,LOW,0);
     GPIO_u8ConfigPin(LCD_CONTROL_PORT,LCD_RW_PIN,GPIO_OUTPUT,LOW,0);
     GPIO_u8ConfigPin(LCD_CONTROL_PORT,LCD_E_PIN,GPIO_OUTPUT,LOW,0);
@@ -31,19 +31,21 @@ void LCD_voidInit(void){
     Systick_u8Init(SYSTICK_ENABLE,MAX_SYSTICK_TICKS);
     //delay more than 30 ms
     Systick_voidDelay_ms(40);
-    LCD_voidSendCommand(Stabilize_4_Bit_CMD);
-    // set LCD 
-    LCD_voidSendCommand(Four_Bits_Data_Mode);
-    Systick_voidDelay_us(45);
-    LCD_voidSendCommand(Two_Line_Four_Bit_Mode);
-    Systick_voidDelay_us(45);
-    //clear display
+    LCD_voidSendCommand(0x33);
+    // set LCD 2 line 16 char 5x7
+    LCD_voidSendCommand(0x32);
+    Systick_voidDelay_ms(1);
+    LCD_voidSendCommand(0x28);
+    Systick_voidDelay_ms(1);
     LCD_voidSendCommand(LCD_CLR);
-    Systick_voidDelay_us(45);
+    //display, cusror , blink set on
+    Systick_voidDelay_ms(1);
+    //clear display
     LCD_voidSendCommand(0x0C);
     Systick_voidDelay_ms(2);
-    
+    //ENtry Moder
     // send message for checking
+    LCD_voidSendCommand(0x0C);
     LCD_voidSendString("Intialized");
 }
 
@@ -53,6 +55,8 @@ void LCD_voidSendCommand(u8 command){
     //RW = 0
     GPIO_u8SetPinValue(LCD_CONTROL_PORT,LCD_RW_PIN,LOW);
     //command send
+    Enable_set();
+    Systick_voidDelay_ms(2);
     //most sig bits
     Enable_set();
     WriteHalfPort(command>>4);
@@ -65,10 +69,13 @@ void LCD_voidSendCommand(u8 command){
 
 void LCD_voidSendData(u8 data){
     //RS = 1
+    //RS = 0
     GPIO_u8SetPinValue(LCD_CONTROL_PORT,LCD_RS_PIN,HIGH);
     //RW = 0
     GPIO_u8SetPinValue(LCD_CONTROL_PORT,LCD_RW_PIN,LOW);
-    //data send
+    //command send
+    Enable_set();
+    Systick_voidDelay_ms(2);
     //most sig bits
 	Enable_set();
     WriteHalfPort(data>>4);
@@ -85,7 +92,7 @@ void LCD_voidSendString(const u8 *Str ){
     while(Str[counter] != '\0')
     {
         LCD_voidSendData(Str[counter]);
-        ++counter;
+        counter++;
     }
 
 }
@@ -104,6 +111,28 @@ void LCD_voidMoveCursor(u8 row,u8 col){
         LCD_voidSendCommand(0x80 | address);
 
 }
+
+void LCD_voidSendNumber( u16 number){
+//	@todo: implement using recursion
+	u16 local_u16tmp = 0 ;
+	u8 counter = 0;
+	while(number%10 == 0){
+		counter++;
+		number/=10;
+	}
+	while(number > 0){
+		local_u16tmp = local_u16tmp *10 + number%10;
+		number /=10;
+	}
+	while(local_u16tmp>0) {
+			LCD_voidSendData((local_u16tmp%10)+'0');
+			local_u16tmp /=10;
+		}
+	for (u8 i =0; i <counter; i++){
+		LCD_voidSendData('0');
+	}
+}
+
 void LCD_voidClearScreen(void){
     LCD_voidSendCommand(LCD_CLR);
 }
@@ -113,18 +142,21 @@ void LCD_voidClearScreen(void){
 
 static void Enable_set(){
     // send enable pulse
+    
     GPIO_u8SetPinValue (LCD_CONTROL_PORT , LCD_E_PIN ,HIGH);
 }
 static void Enable_clr(){
     // send enable pulse
     GPIO_u8SetPinValue (LCD_CONTROL_PORT , LCD_E_PIN ,LOW);
+        Systick_voidDelay_ms(2);
+///
 }
-
 
 static void WriteHalfPort(u8 value){
     GPIO_u8SetPinValue(LCD_DATA_PORT,LCD_D4_PIN,GetBit(value,0));
     GPIO_u8SetPinValue(LCD_DATA_PORT,LCD_D5_PIN,GetBit(value,1));
     GPIO_u8SetPinValue(LCD_DATA_PORT,LCD_D6_PIN,GetBit(value,2));
     GPIO_u8SetPinValue(LCD_DATA_PORT,LCD_D7_PIN,GetBit(value,3));
+
 }
 
