@@ -6,7 +6,7 @@
 #ifndef SYSTICK_PRIVATE_H 
 #define SYSTICK_PRIVATE_H
 
-#include "STD_TYPES.h"
+#include "../LIB/STD_TYPES.h"
 #include "systick_interface.h"
 
 

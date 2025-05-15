@@ -1,12 +1,13 @@
- #include "GPIO_interface.h"
- #include "GPIO_private.h"
- #include "stdio.h"
- #include "UART_interface.h"
- #include "systick_interface.h"
- #include "STD_TYPES.h"
- #include "GPS.h"
- #include "LCD_int.h"
- #include "buzzer.h"
+
+#include "stdio.h"
+#include "../MCAL/GPIO/GPIO_interface.h"
+#include "../MCAL/GPIO/GPIO_private.h"
+#include "../MCAL/UART/UART_interface.h"
+#include "../MCAL/SYSTICK/systick_interface.h"
+#include "../LIB/STD_TYPES.h"
+#include "../HAL/GPS/GPS.h"
+#include "../HAL/LCD/LCD_int.h"
+#include "../HAL/BUZZER/buzzer.h"
 
  #define Check_Location_Port PortD
  #define Check_Location_Pin Pin7

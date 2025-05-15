@@ -4,7 +4,7 @@
 /******* File Name : systick_program.c         *****************/
 /***************************************************************/
 
-#include "STD_TYPES.h"
+#include "../LIB/STD_TYPES.h"
 #include "systick_Private.h"
 #include "systick_interface.h"
 

@@ -3,8 +3,8 @@
 
 #include "string.h"
 #include "stdio.h"
-#include "LCD_int.h"
-#include "STD_TYPES.h"
+#include "../HAL/LCD/LCD_int.h"
+#include "../LIB/STD_TYPES.h"
 #include <math.h>
 
 struct GPRMC_formate

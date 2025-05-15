@@ -6,7 +6,7 @@
 #ifndef LCD_INT_H_
 #define LCD_INT_H_
 
-#include "STD_TYPES.h"
+#include "../LIB/STD_TYPES.h"
 
 void LCD_voidInit(void);
 void LCD_voidSendCommand(u8 command);

@@ -7,8 +7,8 @@
 #ifndef BUZZER_H
 #define BUZZER_H
 
-#include "STD_TYPES.h"
-#include "GPIO_interface.h"
+#include "../LIB/STD_TYPES.h"
+#include "../MCAL/GPIO/GPIO_interface.h"
 
 #define BUZZER_PORT PortA /////////////adjust those//////////
 #define BUZZER_PIN Pin3

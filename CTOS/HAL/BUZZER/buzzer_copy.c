@@ -5,9 +5,10 @@
 /****************************************************************/
 
 #include "buzzer.h"
-#include "systick_interface.h"
-#include "GPIO_Private.h"
-#include "UART_interface.h"
+#include "../MCAL/SYSTICK/systick_interface.h"
+#include "../MCAL/GPIO/GPIO_private.h"
+#include "../MCAL/UART/UART_interface.h"
+
 extern struct GPRMC_formate current_position;
 
 void Buzzer_Init(void)

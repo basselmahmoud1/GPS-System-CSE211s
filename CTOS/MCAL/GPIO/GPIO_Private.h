@@ -7,8 +7,8 @@
 #ifndef GPIO_Private_H
 #define GPIO_Private_H
 
-#include "STD_TYPES.h"
-#include "BIT_MATH.h"
+#include "../LIB/STD_TYPES.h"
+#include "../LIB/BIT_MATH.h"
 #include "GPIO_interface.h"
 
 /********************************* BASE ADDRESS OF EACH PORT *******************************/

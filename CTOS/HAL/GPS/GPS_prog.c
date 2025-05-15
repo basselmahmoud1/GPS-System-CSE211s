@@ -1,9 +1,9 @@
 #include "GPS.h"
 #include <math.h>
-#include "LCD_int.h"
-#include "systick_interface.h"
-#include "GPIO_interface.h"
-#include "UART_interface.h"
+#include "../HAL/LCD/LCD_int.h"
+#include "../MCAL/SYSTICK/systick_interface.h"
+#include "../MCAL/GPIO/GPIO_interface.h"
+#include "../MCAL/UART/UART_interface.h"
 
 u8 GPS_u8ParsGpsString(char *gps_string, struct GPRMC_formate *GPS_parsed)
 {

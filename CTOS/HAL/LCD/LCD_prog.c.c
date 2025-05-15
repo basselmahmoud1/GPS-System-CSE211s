@@ -3,16 +3,17 @@
 /******* Date      : 15/4/2025                  *****************/
 /******* File Name : LCD_prog.c            *****************/
 /****************************************************************/
-#include "GPIO_interface.h"
-#include "BIT_MATH.h"
-#include "STD_TYPES.h"
+#include "string.h"
+#include "stdio.h"
+#include "../MCAL/GPIO/GPIO_interface.h"
+#include "../LIB/BIT_MATH.h"
+#include "../LIB/STD_TYPES.h"
+#include "../MCAL/SYSTICK/systick_interface.h"
+#include "../MCAL/GPIO/GPIO_private.h"
 #include "LCD_config.h"
 #include "LCD_int.h"
 #include "LCD_priv.h"
-#include "systick_interface.h"
-#include "GPIO_Private.h"
-#include "string.h"
-#include "stdio.h"
+
 
 #define HIGH    1
 #define LOW     0

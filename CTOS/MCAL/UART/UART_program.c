@@ -7,13 +7,13 @@
 
 
 #include "tm4c123gh6pm.h"
-#include "STD_TYPES.h"
-#include "BIT_MATH.h"
+#include "../LIB/STD_TYPES.h"
+#include "../LIB/BIT_MATH.h"
+#include "../MCAL/GPIO/GPIO_interface.h"
+#include "../MCAL/GPIO/GPIO_private.h"
 #include "UART_configuration.h"
 #include "UART_interface.h"
 #include "UART_private.h"
-#include "GPIO_interface.h"
-#include "GPIO_private.h"
 
 void UART0_voidConfig(void)
 {

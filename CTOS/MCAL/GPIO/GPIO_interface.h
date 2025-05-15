@@ -7,7 +7,7 @@
 #ifndef GPIO_Interface
 #define GPIO_Interface
 
-#include "STD_TYPES.h"
+#include "../LIB/STD_TYPES.h"
 
 typedef struct {
     u32 GPIODATA;       // can be used for reading

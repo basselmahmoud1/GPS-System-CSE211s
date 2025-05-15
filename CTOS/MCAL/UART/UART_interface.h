@@ -9,7 +9,7 @@
 #ifndef UART_INTERFACE_H_
 #define UART_INTERFACE_H_
 
-#include "STD_TYPES.h"
+#include "../LIB/STD_TYPES.h"
 
 void UART0_voidInitialize(void);
 u8 UART0_u8ReceiveByte(void);

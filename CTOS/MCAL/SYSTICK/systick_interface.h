@@ -7,7 +7,7 @@
 #ifndef SYSTICK_INTERFACE_H 
 #define SYSTICK_INTERFACE_H
 
-#include "STD_TYPES.h"
+#include "../LIB/STD_TYPES.h"
 
 typedef struct 
 {
