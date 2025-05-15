@@ -14,6 +14,7 @@ void LCD_voidSendString(const u8 *Str );
 void LCD_voidMoveCursor(u8 row,u8 col);
 void LCD_voidClearScreen(void);
 void LCD_voidSendData(u8 data);
+//void LCD_voidSendNumber(f64 num);
 
 #endif
 
