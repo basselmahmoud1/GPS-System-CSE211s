@@ -1,0 +1,10 @@
+.\gps_prog.o: GPS_prog.c
+.\gps_prog.o: GPS.h
+.\gps_prog.o: F:\download_kielV4\ARM\ARMCC\bin\..\include\string.h
+.\gps_prog.o: F:\download_kielV4\ARM\ARMCC\bin\..\include\stdio.h
+.\gps_prog.o: LCD_int.h
+.\gps_prog.o: STD_TYPES.h
+.\gps_prog.o: F:\download_kielV4\ARM\ARMCC\bin\..\include\math.h
+.\gps_prog.o: systick_interface.h
+.\gps_prog.o: GPIO_interface.h
+.\gps_prog.o: UART_interface.h

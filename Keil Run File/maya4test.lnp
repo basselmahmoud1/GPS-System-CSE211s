@@ -1,0 +1,13 @@
+--cpu Cortex-M4.fp
+".\gpio_program.o"
+".\gps_prog.o"
+".\lcd_prog.c.o"
+".\main.o"
+".\startup_tm4c123.o"
+".\system_tm4c123.o"
+".\systick_program.o"
+".\uart_program.o"
+".\buzzer_copy.o"
+--ro-base 0x00000000 --entry 0x00000000 --rw-base 0x20000000 --entry Reset_Handler --first __Vectors --strict --summary_stderr --info summarysizes --map --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list ".\maya4test.map" -o .\maya4test.axf
