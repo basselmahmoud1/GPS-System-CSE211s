@@ -1,0 +1,64 @@
+<html>
+<body>
+<pre>
+<h1>µVision Build Log</h1>
+<h2>Project:</h2>
+C:\Users\AZHAR\Documents\Projects_Reports\Embedded ASU\Project\maya\test4\maya4test.uvproj
+Project File Date:  05/13/2025
+
+<h2>Output:</h2>
+Rebuild target 'Target 1'
+compiling GPIO_program.c...
+compiling GPS_prog.c...
+GPS.h(113): warning:  #1-D: last line of file ends without a newline
+  #endif
+GPS_prog.c(22): warning:  #167-D: argument of type "u8 *" is incompatible with parameter of type "const char *"
+              checker = strcmp(token, "$GPRMC");
+GPS_prog.c(214): warning:  #177-D: variable "landmark_position" was declared but never referenced
+      struct GPRMC_formate landmark_position;
+GPS_prog.c(252): warning:  #177-D: variable "distance_str" was declared but never referenced
+      u8 distance_str[10];
+GPS_prog.c(306): warning:  #167-D: argument of type "u8 *" is incompatible with parameter of type "char *"
+      state = GPS_u8ParsGpsString(gps_string, &current_position);
+GPS_prog.c(294): warning:  #177-D: variable "test" was declared but never referenced
+                        u8 test[10];
+GPS_prog.c(424): warning:  #167-D: argument of type "u8 *" is incompatible with parameter of type "char *"
+                                while(GPS_u8ParsGpsString(gps_string,&GPS_parsed)==Recieve_ERR) UART1_voidReceiveString(gps_string);
+GPS_prog.c(407): warning:  #177-D: variable "curr_lat" was declared but never referenced
+    f64 lat_diff,long_diff,curr_lat,curr_long;
+GPS_prog.c(407): warning:  #177-D: variable "curr_long" was declared but never referenced
+    f64 lat_diff,long_diff,curr_lat,curr_long;
+GPS_prog.c(462): warning:  #1-D: last line of file ends without a newline
+                        
+GPS_prog.c: 10 warnings, 0 errors
+compiling LCD_prog.c.c...
+LCD_prog.c.c(161): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "const u8 *"
+        LCD_voidSendString(str);
+LCD_prog.c.c(162): warning:  #1-D: last line of file ends without a newline
+  }
+LCD_prog.c.c(24): warning:  #177-D: function "E_RESET" was declared but never referenced
+  static void E_RESET()
+LCD_prog.c.c: 3 warnings, 0 errors
+compiling main.c...
+GPS.h(113): warning:  #1-D: last line of file ends without a newline
+  #endif
+main.c(32): warning:  #167-D: argument of type "u8 *" is incompatible with parameter of type "char *"
+        while(GPS_u8ParsGpsString(gps_string,&GPS_parsed)==Recieve_ERR) UART1_voidReceiveString(gps_string); 
+main.c: 2 warnings, 0 errors
+assembling startup_TM4C123.s...
+compiling system_TM4C123.c...
+compiling systick_program.c...
+compiling UART_program.c...
+tm4c123gh6pm.h(12713): warning:  #1-D: last line of file ends without a newline
+  #endif // __TM4C123GH6PM_H__
+UART_program.c: 1 warning, 0 errors
+compiling buzzer_copy.c...
+linking...
+Program Size: Code=17004 RO-data=1760 RW-data=4 ZI-data=644  
+".\maya4test.axf" - 0 Error(s), 16 Warning(s).
+Error(s), 17 Warning(s).
+Load "C:\\Users\\AZHAR\\Documents\\Projects_Reports\\Embedded ASU\\Project\\maya\\test4\\maya4test.axf" 
+Connecting: Mode=JTAG, Speed=1000000Hz
+Erase Done.
+Programming Done.
+Verify OK.

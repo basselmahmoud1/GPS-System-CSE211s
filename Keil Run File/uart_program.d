@@ -1,0 +1,9 @@
+.\uart_program.o: UART_program.c
+.\uart_program.o: tm4c123gh6pm.h
+.\uart_program.o: STD_TYPES.h
+.\uart_program.o: BIT_MATH.h
+.\uart_program.o: UART_configuration.h
+.\uart_program.o: UART_interface.h
+.\uart_program.o: UART_private.h
+.\uart_program.o: GPIO_interface.h
+.\uart_program.o: GPIO_private.h
