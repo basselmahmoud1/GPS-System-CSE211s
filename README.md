@@ -1,100 +1,114 @@
-#  GPS Navigation System
+# 📍 GPS Navigation System
 
-##  Overview
+## 🚀 Overview
 
-This project implements a **GPS navigation system** for embedded devices, providing:
+This project implements a **GPS navigation system** for embedded systems. It provides:
 
-- Location parsing  
-- Distance calculation  
+- Real-time GPS data parsing  
+- Accurate distance calculation  
 - Nearest landmark detection  
-- Directional guidance  
+- Directional navigation and guidance  
 
-It parses NMEA GPS data, calculates distances between coordinates using the Haversine formula, and provides clear navigation messages through an LCD interface.
+It uses NMEA-formatted GPS data and the Haversine formula for geographical calculations, providing clear visual feedback via an LCD module.
 
 ---
 
-##  Key Features
+## 🔑 Key Features
 
-###  GPS Data Parsing
-- Parses NMEA GPRMC sentences to extract latitude, longitude, and direction  
-- Validates GPS data integrity
+### 🛰️ GPS Data Parsing
+- Parses **GPRMC NMEA sentences**  
+- Extracts latitude, longitude, speed, and status  
+- Validates GPS sentence integrity  
 
-###  Coordinate Calculations
-- Converts NMEA format to decimal degrees  
-- Calculates distances using the Haversine formula  
-- Supports both meter and kilometer distance units
+### 📍 Coordinate & Distance Calculations
+- Converts NMEA to **decimal degrees**  
+- Calculates distance using the **Haversine formula**  
+- Supports output in meters or kilometers  
 
-###  Navigation
-- Provides compass direction (N, NE, E, SE, S, SW, W, NW)  
+### 🧭 Navigation & Guidance
+- Determines compass direction (N, NE, E, etc.)  
 - Estimates time to destination based on speed  
-- Generates navigation messages
+- Displays human-readable **navigation messages**  
 
-###  Landmark System
-- Manages predefined locations  
-- Identifies the nearest landmark  
-- Displays landmark data on the LCD
+### 🗺️ Landmark System
+- Supports an array of **predefined landmarks**  
+- Identifies and displays the **nearest landmark**  
+- Allows for easy modification and expansion  
 
-###  Hardware Integration
+### ⚙️ Hardware Integration
 - GPIO configuration for LCD and peripherals  
 - UART communication with GPS module  
-- LCD display interface for visual feedback
+- LCD feedback via 16x2 display or similar  
 
 ---
 
-##  File Structure
+## 📁 File Structure
 
 ```
-├── BIT_MATH.h             # Bit manipulation macros
-├── STD_TYPES.h            # Standard data types
-├── GPIO_interface.h       # GPIO port/pin configuration interface
-├── GPIO_private.h         # GPIO hardware definitions and helpers
-├── GPIO_program.c         # GPIO function implementations
-├── GPS.h                  # GPS data structures and function declarations
-├── GPS_prog.c             # GPS implementation (parsing, calculations)
-├── extra.h                # Extended GPS functionality headers
-├── extra.c                # Extended GPS feature implementations
-├── LCD_config.h           # LCD pin configuration
-├── LCD_int.h              # LCD interface
-├── systick_interface.h    # Systick timer function declarations
-├── systick_program.c      # Systick timer implementation
-├── systick_config.h       # Systick configuration settings
-├── systick_private.h      # Systick internal definitions
-├── UART_interface.h       # UART function declarations
-├── UART_program.c         # UART implementation
-├── UART_config.h          # UART configuration settings
-└── UART_private.h         # UART internal definitions
+├── APP/
+│   └── main.c                   # Application entry point
+├── MCAL/
+│   ├── GPIO/
+│   │   ├── GPIO_interface.h     # GPIO interface
+│   │   ├── GPIO_private.h       # Internal GPIO definitions
+│   │   └── GPIO_program.c       # GPIO logic
+│   ├── UART/
+│   │   ├── UART_interface.h     # UART API
+│   │   ├── UART_private.h
+│   │   ├── UART_config.h
+│   │   └── UART_program.c
+│   └── SYSTICK/
+│       ├── systick_interface.h
+│       ├── systick_private.h
+│       ├── systick_config.h
+│       └── systick_program.c
+├── HAL/
+│   ├── GPS/
+│   │   ├── GPS.h                # GPS API
+│   │   ├── GPS_prog.c           # Parsing & math
+│   │   ├── extra.h              # Extended GPS features
+│   │   └── extra.c
+│   ├── LCD/
+│   │   ├── LCD_int.h
+│   │   └── LCD_config.h
+│   └── BUZZER/
+│       └── buzzer.h
+├── LIB/
+│   ├── BIT_MATH.h              # Bit macros
+│   └── STD_TYPES.h             # Standard types
+```
 
 ---
 
-## Usage Examples
+## 🧪 Usage Examples
 
-### 1. Parsing GPS Data
+### 1. 📡 Parsing GPS Data
 ```c
 char gps_string[] = "$GPRMC,202519.00,A,3003.911667,N,3116.805000,E";
 struct GPRMC_formate current_position;
 u8 status = GPS_u8ParsGpsString(gps_string, &current_position);
 ```
 
-### 2. Calculating Distance
+### 2. 🧮 Calculating Distance
 ```c
 f64 distance = GPS_f64CalculateDistanceFromCoordinates(&point1, &point2);
 ```
 
-### 3. Finding Nearest Landmark
+### 3. 📌 Finding Nearest Landmark
 ```c
 struct Landmark nearest;
 f64 distance;
 GPS_u8FindNearestLandmark(&current_position, landmarks_array, 
-                         num_landmarks, &nearest, &distance);
+                           num_landmarks, &nearest, &distance);
 ```
 
-### 4. Getting Direction Guidance
+### 4. 🧭 Getting Direction Guidance
 ```c
 u8 direction[20];
 GPS_u8GetDirectionGuidance(&current, &destination, direction);
 ```
 
-### 5. Generating Navigation Message
+### 5. 🗣️ Generating Navigation Message
 ```c
 u8 guidance[100];
 GPS_voidGenerateNavigationGuidance(&current, "Home", 1.5, guidance);
@@ -102,52 +116,53 @@ GPS_voidGenerateNavigationGuidance(&current, "Home", 1.5, guidance);
 
 ---
 
-##  Hardware Configuration
+## 🛠️ Hardware Configuration
 
-### GPIO Setup
-- Configure pins with `GPIO_u8ConfigPin()`
-- Enable clocks for relevant ports
+### 📌 GPIO
+- Configure with `GPIO_u8ConfigPin()`
+- Enable peripheral clocks as needed
 
-### LCD Connection
-- Configure pins in `LCD_config.h`
-- Initialize with `LCD_voidInit()`
+### 📺 LCD
+- Set pin mapping in `LCD_config.h`
+- Initialize using `LCD_voidInit()`
 
-### UART Setup
-- Set up UART for GPS module communication  
-- Use a baud rate compatible with your GPS device
-
----
-
-##  Customization
-
-### Landmarks
-- Modify the landmarks array in `GPS_voidCheckTheNearest()`
-- Format: `{"Name", latitude, longitude}` in NMEA format
-
-### Distance Thresholds
-- Customize thresholds in `GPS_voidGenerateNavigationGuidance()` for different messaging behaviors
-
-### LCD Display Format
-- Edit `GPS_voidDisplayNearestLandmark()` to change LCD text format
+### 📡 UART
+- Connect GPS to UART pins  
+- Set baud rate to match GPS module (typically 9600)
 
 ---
 
-##  Limitations
+## 🔧 Customization
 
-- Requires floating-point support on the microcontroller  
-- GPS module must output GPRMC NMEA sentences  
-- Landmark data is stored in program memory (limited capacity)
+### ➕ Landmarks
+- Modify the landmarks array in `GPS_voidCheckTheNearest()`  
+- Format: `{"Name", latitude, longitude}`
+
+### 🧾 Distance Thresholds
+- Edit `GPS_voidGenerateNavigationGuidance()` for different distance message rules
+
+### 💬 LCD Display Format
+- Change display text in `GPS_voidDisplayNearestLandmark()` as needed
 
 ---
 
-##  Dependencies
+## ⚠️ Limitations
 
-- Standard C libraries (`math.h`, `string.h`)  
-- Microcontroller-specific headers  
+- Floating-point support required  
+- Only supports GPRMC NMEA sentences  
+- Limited landmark storage (program memory)
+
+---
+
+## 📦 Dependencies
+
+- Standard C libraries: `math.h`, `string.h`  
+- Microcontroller headers  
 - LCD driver implementation
 
 ---
 
-##  License
+## 📄 License
 
-This project is open-source. Feel free to use, modify, and distribute it as needed.
+This project is open-source. Feel free to use, modify, and distribute.
+ 
