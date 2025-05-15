@@ -65,9 +65,9 @@ It uses NMEA-formatted GPS data and the Haversine formula for geographical calcu
 ├── HAL/
 │   ├── GPS/
 │   │   ├── GPS.h                # GPS API
-│   │   ├── GPS_prog.c           # Parsing & math
-│   │   ├── extra.h              # Extended GPS features
-│   │   └── extra.c
+│   │   └── GPS_prog.c           # Parsing & math
+│   │                
+│   │    
 │   ├── LCD/
 │   │   ├── LCD_int.h
 │   │   └── LCD_config.h
